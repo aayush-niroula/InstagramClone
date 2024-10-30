@@ -1,37 +1,43 @@
 import { Label } from '@radix-ui/react-label'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import axios from 'axios'
 import { toast } from 'sonner'
 import { Link, useNavigate } from 'react-router-dom'
-import Login from './Login'
+
 import { Loader2 } from 'lucide-react'
+import { useSelector } from 'react-redux'
 
 const Signup = () => {
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
   const [input, setInput] = useState({
     username: "",
     email: "",
     password: ""
   })
+  const [loading, setLoading] = useState(false)
+  const {user}=useSelector(store=>store.auth)
+  const navigate = useNavigate()
 
   const changeEventHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value })
   }
   const signUpHandler = async (e) => {
-    await e.preventDefault();
-    console.log(input);
+     e.preventDefault();
     try {
       setLoading(true)
-      const res = await axios.post("http://localhost:8000/api/v1/user/register", input, {
+    const res = await axios.post("http://localhost:8000/api/v1/user/register", input, {
+        
         headers: {
           "Content-Type": "application/json"
         },
         withCredentials: true
       })
+      console.log(res);
+      
+      
+      
       if (res.data.success) {
         navigate('/login')
         toast.success(res.data.message)
@@ -54,6 +60,11 @@ const Signup = () => {
       setLoading(false)
     }
   }
+  useEffect(()=>{
+    if(user){
+      navigate('/')
+    }
+  })
 
   return (
     <div className='flex items-center w-screen h-screen justify-center'>
@@ -69,7 +80,7 @@ const Signup = () => {
             name="username"
             value={input.username}
             onChange={changeEventHandler}
-            className="my-2"
+            className="my-2 focus-visible:ring-transparent"
           />
           <Label>Email</Label>
           <Input
@@ -77,13 +88,13 @@ const Signup = () => {
             name="email"
             value={input.email}
             onChange={changeEventHandler}
-            className="my-2"
+            className="my-2 focus-visible:ring-transparent"
           />
           <Label>Password</Label>
           <Input
             type="text"
             name="password"
-            className="my-2"
+            className="my-2 focus-visible:ring-transparent"
             value={input.password}
             onChange={changeEventHandler}
           />

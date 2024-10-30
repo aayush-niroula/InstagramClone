@@ -8,17 +8,18 @@ import { Post } from "../model/post.model.js";
 export const register = async (req, res) => {
     try {
         const { username, email, password } = req.body
+        
         if (!username || !email || !password) {
             return res.status(401).json({
                 message: "Something is missing! check",
-                status: false
+                success: false
             })
         }
         const user = await User.findOne({ email })
         if (user) {
             return res.status(401).json({
                 message: "Email already exists",
-                status: false
+                success: false
             })
         }
 
@@ -34,7 +35,7 @@ export const register = async (req, res) => {
 
         return res.status(201).json({
             message: "Account created successfully",
-            status: true
+            success: true
         })
 
 
@@ -48,6 +49,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        
         if (!email || !password) {
             return res.status(401).json({
                 message: "Something is missing,check",
@@ -128,7 +130,7 @@ export const logout=async(req,res)=>{
 export const getProfile=async(req,res)=>{
     try {
         const userId= req.params.id;
-       let user=await User.findById(userId).populate({path:'posts',createdAt:-1}).populate({path:'bookmark',createdAt:-1});
+       let user=await User.findById(userId).populate({path:'posts',createdAt:-1}).populate({path:'bookmarks',createdAt:-1});
       return res.status(200).json({
         user,
         success:true
@@ -144,12 +146,14 @@ export const getProfile=async(req,res)=>{
 //edit profile
 
 export const editProfile=async (req,res) => {
+    
     try {
     const userId=req.id;
     const{bio,gender}=req.body;
-    const{profilePicture}=req.file;
+    const profilePicture=req.file;
+    
     let cloudResponse;
-
+     
 
     if(profilePicture){
      const fileUri=getDataUri(profilePicture)
@@ -165,7 +169,10 @@ export const editProfile=async (req,res) => {
     if(bio) user.bio=bio;
     if(gender) user.gender=gender;
     if(profilePicture) user.profilePicture=cloudResponse.secure_url;
+
    await user.save();
+   console.log(user);
+   
  return res.status(200).json({
     message:'profile updated', 
     success:true,
@@ -207,15 +214,15 @@ export const getSuggestedUser=async (req,res)=>{
 
 export const followOrUnfollow=async (req,res) => {
     try {
-        const follwedId=req.id;
+        const followedId=req.id;
         const toFollow=req.params.id;
-        if(follwedId===toFollow){
+        if(followedId===toFollow){
             return res.status(400).json({
                 message:'You cannot follow or unfollow yourself',
                 success:false
             })
         }
-     const user=await User.findById(follwedId);
+     const user=await User.findById(followedId);
      const targetUser=await User.findById(toFollow)
     
      if(!user ||!targetUser){
@@ -230,8 +237,8 @@ export const followOrUnfollow=async (req,res) => {
      if(isFollowing){
         //unfollow means already following
         await Promise.all([
-            User.updateOne({_id:follwedId},{$pull:{following:toFollow}}),
-            User.updateOne({_id:toFollow},{$pull:{followers:follwedId}}),
+            User.updateOne({_id:followedId},{$pull:{following:toFollow}}),
+            User.updateOne({_id:toFollow},{$pull:{followers:followedId}}),
         ])
       return res.status(200).json({message:'Unfollow sucesssfully',success:true})
      }
@@ -239,8 +246,8 @@ export const followOrUnfollow=async (req,res) => {
         //follow ----means yet to follow
        await Promise.all(
         [
-        User.updateOne({_id:follwedId},{$push:{following:toFollow}}),
-        User.updateOne({_id:toFollow},{$push:{followers:follwedId}}),
+        User.updateOne({_id:followedId},{$push:{following:toFollow}}),
+        User.updateOne({_id:toFollow},{$push:{followers:followedId}}),
         ]
        )
      }

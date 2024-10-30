@@ -6,12 +6,19 @@ import connectDB from './utils/db.js'
 import userRoute from './routes/user.route.js'
 import postRoute from "./routes/post.route.js"
 import messageRoute from "./routes/message.route.js"
+import { app,server } from './socket/socket.js'
+import path from 'path'
+
 
 dotenv.config({})
 
-const app= express()
+
 
 const PORT=8000;
+
+const _dirname= path.resolve()
+
+
 
 
 app.get("/",(req,res)=>{
@@ -38,10 +45,14 @@ app.use("/api/v1/user",userRoute);
 app.use("/api/v1/post",postRoute);
 app.use("/api/v1/message",messageRoute);
 
+app.use(express.static(path.join(_dirname,"/frontend/dist")))
+app.get("*",(req,res)=>{
+   res.sendFile(path.resolve(_dirname,"frontend","dist","index.html"))
+})
 
 
 
-app.listen(PORT,()=>{
+server.listen(PORT,()=>{
    connectDB()
   console.log(`Server running at port ${PORT}`)
 })

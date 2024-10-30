@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dialog, DialogTrigger } from './ui/dialog'
 import { MoreHorizontal } from 'lucide-react'
 import { DialogContent } from '@radix-ui/react-dialog'
@@ -17,11 +17,12 @@ import { Badge } from './ui/badge'
 function Post({ post }) {
     const [text, setText] = useState("")
     const [open, setOpen] = useState(false)
-    const { user } = useSelector(store => store.auth)
+    const { user,suggestedUsers } = useSelector(store => store.auth)
     const { posts } = useSelector(store => store.post)
     const [liked, setLiked] = useState(post.likes.includes(user._id) || false)
     const [postLike, setPostLike] = useState(post.likes.length)
     const [comment, setComment] = useState(post.comments)
+    // const [follow,setFollow]=useState(false)
     const dispatch = useDispatch()
 
     const setEventHandler = (e) => {
@@ -102,13 +103,50 @@ function Post({ post }) {
         }
     }
 
+    const bookmarkHandler =async ()=>{
+        try {
+            const res = await axios.get(`http://localhost:8000/api/v1/post/${post?._id}/bookmark`,{withCredentials: true})
+            
+            if(res.data.success){
+                toast.success(res.data.message)
+            }
+        } catch (error) {
+            console.log(error);
+            g
+        }
+    }
+
+    
+            // const fetchFollowOrUnfollow =async()=>{
+            //     try {
+            //         const followedId=user?._id
+            //         const toFollow=suggestedUsers.map((user)=>user._id)
+            //         const res =await axios.post(`http://localhost:8000/api/v1/user/followOrUnfollow/${user?._id}`,{followedId,toFollow},{
+            //             headers:{
+            //                 'Content-Type':'application/json'
+                        
+            //             },withCredentials:true
+            //         }  )
+            //         console.log(res.data);
+                    
+            //     } catch (error) {
+            //         console.log(error);
+                    
+            //     }
+       
+            // }
+
+      
+
+   
+
     return (
 
         <div className='my-8 w-full max-w-sm mx-auto'>
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-2'>
                     <Avatar>
-                        <AvatarImage src={post.author?.profilePicture} alt='post-image' />
+                        <AvatarImage className='object-scale-down rounded-3xl h-14' src={post.author?.profilePicture} alt='post-image' />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                     <div className='flex items-center gap-3'>
@@ -123,7 +161,11 @@ function Post({ post }) {
                         <MoreHorizontal className='cursor-pointer' />
                     </DialogTrigger>
                     <DialogContent className='flex flex-col' >
-                        <Button variant='ghost' className='cursor-pointer  w-fit text-[#ED4956] font-bold'>Unfollow</Button>
+                        {
+                            user && user?._id !== post.author._id &&
+                            <Button variant='ghost' className='cursor-pointer  w-fit text-[#ED4956] font-bold'>Unfollow</Button>
+                        }
+                      
                         <Button variant='ghost' className='cursor-pointer w-fit '>Add to Favourite </Button>
 
                         {
@@ -150,7 +192,7 @@ function Post({ post }) {
                     }} size={'22px'} className='cursor-pointer hover:text-gray-600' />
                     <LuSend size={'22px'} className='cursor-pointer hover:text-gray-600' />
                 </div>
-                <CiBookmark className='cursor-pointer hover:text-gray-600' />
+                <CiBookmark onClick={bookmarkHandler}className='cursor-pointer hover:text-gray-600' />
             </div>
             <span className='font-medium block m-b-2'>{post.likes.length}</span>
             <p>

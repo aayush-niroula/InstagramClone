@@ -13,6 +13,6 @@ router.route("/:id/dislike").get(isAuthenticated,dislikePost)
 router.route("/:id/comment").post(isAuthenticated,addCommment)
 router.route("/:id/comment/all").post(isAuthenticated,getAllComments)
 router.route("/delete/:id").delete(isAuthenticated,deletePost)
-router.route("/:id/bookmark").post(isAuthenticated,bookmarkPost)
+router.route("/:id/bookmark").get(isAuthenticated,bookmarkPost)
 
 export default router;
