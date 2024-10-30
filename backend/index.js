@@ -14,20 +14,14 @@ dotenv.config({})
 
 
 
-const PORT=8000;
+const PORT=process.env.PORT;
 
 const _dirname= path.resolve()
 
 
 
 
-app.get("/",(req,res)=>{
- return res.status(200).json({
-    message:"I'm comming from backend",
-    success:true
- })
 
-})
 //middleware
 app.use(express.json());
 app.use(cookieParser())
