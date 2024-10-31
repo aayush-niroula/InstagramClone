@@ -14,7 +14,7 @@ dotenv.config({})
 
 
 
-const PORT=process.env.PORT ||4000;
+const PORT=8000;
 
 const _dirname= path.resolve()
 
