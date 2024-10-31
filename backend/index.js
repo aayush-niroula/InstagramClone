@@ -28,7 +28,7 @@ app.use(cookieParser())
 app.use(urlencoded({extended:true}))
 
 const corsOptions={
-origin:process.env.URL,
+origin:process.env.URL || "https://instagramclone-u8xy.onrender.com",
 credentials:true,
 
 }
