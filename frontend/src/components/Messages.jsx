@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Avatar, AvatarFallback } from './ui/avatar'
 import { AvatarImage } from '@radix-ui/react-avatar'
 import { Button } from './ui/button'
@@ -12,6 +12,19 @@ function Messages({selectedUser}) {
   useGetAllMessage()
   const {user}= useSelector(store=>store.auth)
 const {messages}=useSelector(store=>store.chat)
+const messageRef= useRef(null)
+
+useEffect(()=>{
+  messageRef.current?.scrollIntoView({behavior:'smooth'})
+},[messages])
+
+const filteredMessages = useMemo(() => 
+  messages?.filter(msg => 
+      (msg.senderId === user?._id && msg.receiverId === selectedUser?._id) || 
+      (msg.senderId === selectedUser?._id && msg.receiverId === user?._id)
+  ), 
+  [messages, user, selectedUser]
+);
   return (
     <div className='overflow-y-auto flex-1 p-4'>
        <div className='flex justify-center'>
@@ -26,7 +39,7 @@ const {messages}=useSelector(store=>store.chat)
        </div>
        <div className='flex flex-col gap-3'>
        {
-        messages&& messages.map((msg)=>{
+        filteredMessages?.map((msg)=>{
             return(
                 <div key={msg._id}  className={`flex flex-1  ${msg.senderId ===user?._id ? 'justify-end':'justify-start'} `}>
                   
