@@ -56,7 +56,7 @@ function EditProfile() {
         // }
         try {
             setLoading(true)
-            const res =await axios.put('https://instagramclone-u8xy.onrender.com/api/v1/user/profile/edit',formdata,{
+            const res =await axios.put('http://localhost:8000/api/v1/user/profile/edit',formdata,{
                 headers:{
                     'Content-Type':'multipart/form-data'
                 },
