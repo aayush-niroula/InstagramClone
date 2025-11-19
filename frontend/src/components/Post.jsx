@@ -61,7 +61,7 @@ function Post({ post }) {
     }
     const commentHandler = async () => {
         try {
-            const res = await axios.post(`http://localhost:8000/api/v1/post${post?._id}/comment`, { text }, {
+            const res = await axios.post(`https://instagramclone-u8xy.onrender.com/v1/post${post?._id}/comment`, { text }, {
                 headers: {
                     "Content-Type": 'application/json'
                 },
@@ -91,7 +91,7 @@ function Post({ post }) {
 
     const deletePostHandler = async () => {
         try {
-            const res = await axios.delete(`http://localhost:8000/api/v1/delete/${post?._id}`, { withCredentials: true })
+            const res = await axios.delete(`https://instagramclone-u8xy.onrender.com/v1/delete/${post?._id}`, { withCredentials: true })
             if (res.data.success) {
                 const updatedPost = posts.filter((postItem) => postItem?._id !== post?._id)
                 dispatch(setPosts(updatedPost))
@@ -106,7 +106,7 @@ function Post({ post }) {
 
     const bookmarkHandler =async ()=>{
         try {
-            const res = await axios.get(`http://localhost:8000/api/v1${post?._id}/bookmark`,{withCredentials: true})
+            const res = await axios.get(`https://instagramclone-u8xy.onrender.com/api/v1${post?._id}/bookmark`,{withCredentials: true})
             
             if(res.data.success){
                 toast.success(res.data.message)

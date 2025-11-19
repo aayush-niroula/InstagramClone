@@ -54,7 +54,7 @@ function App() {
   const dispatch =useDispatch()
 useEffect(()=>{
 if(user){
-  const socketio= io('http://localhost:8000',{
+  const socketio= io('https://instagramclone-u8xy.onrender.com',{
     query:{
       userId:user?._id
     },
