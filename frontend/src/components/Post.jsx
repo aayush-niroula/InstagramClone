@@ -126,7 +126,7 @@ function Post({ post }) {
 
     return (
 
-        <div className='my-8 w-full max-w-sm mx-auto'>
+        <div className='my-4 md:my-8 w-full max-w-[100%] sm:max-w-sm mx-auto px-2 sm:px-0'>
             <div className='flex items-center justify-between'>
                 <div className='flex items-center gap-2'>
                     <Avatar>

@@ -25,7 +25,7 @@ export const register = async (req, res) => {
 
         const hashPassword = await bcrypt.hash(password, 10)
     
-        //create new user
+    
 
         await User.create({
             username,

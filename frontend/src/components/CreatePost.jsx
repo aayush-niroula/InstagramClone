@@ -61,7 +61,7 @@ function CreatePost({ open, setOpen }) {
   }
   return (
     <Dialog open={open}>
-      <DialogContent className='bg-white rounded-sm ' onInteractOutside={() => setOpen(false)}>
+      <DialogContent className='bg-white rounded-sm w-[95vw] max-w-lg mx-auto' onInteractOutside={() => setOpen(false)}>
         <DialogHeader className='text-center font-semibold'>Create Post</DialogHeader>
         <div className='flex gap-3 items-center'>
           <Avatar>
@@ -76,13 +76,13 @@ function CreatePost({ open, setOpen }) {
         <Textarea value={caption} onChange={(e)=>setCaption(e.target.value)}className='focus-visible:ring-transparent border-none' placeholder="Write a caption" />
         {
           imagePreview &&(
-            <div className='w-full h-64 flex items'>
+            <div className='w-full h-48 sm:h-64 flex items'>
               <img src={imagePreview} alt="preview_img" className='object-cover rounded-md h-full w-full'/>
             </div>
           )
         }
         <input ref={imageRef} type='file' className='hidden' onChange={fileChangeHandler}/>
-        <Button onClick={() => imageRef.current.click()} className='w-fit mx-auto bg-[#0095f6] hover:bg-[#3569c8]'>Select from device</Button>
+        <Button onClick={() => imageRef.current.click()} className='w-fit mx-auto bg-[#0095f6] hover:bg-[#3569c8] text-sm'>Select from device</Button>
         {
           imagePreview && (
             loading ?(

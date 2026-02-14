@@ -11,8 +11,8 @@ const Home=()=> {
     useGetSuggestedUsers();
   
   return (
-    <div className='flex '>
-      <div className='flex-grow'>
+    <div className='flex flex-col lg:flex-row'>
+      <div className='flex-grow w-full lg:w-auto'>
         <Feed/>
 
         <Outlet/>

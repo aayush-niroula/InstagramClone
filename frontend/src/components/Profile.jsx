@@ -24,20 +24,20 @@ function Profile() {
 
 
   return (
-    <div className='flex max-w-5xl justify-center mx-auto pl-10'>
-      <div className='flex flex-col gap-20 p-8'>
+    <div className='flex max-w-5xl justify-center mx-auto px-4 sm:px-6 md:pl-10'>
+      <div className='flex flex-col gap-8 md:gap-20 p-4 md:p-8 w-full'>
 
-        <div className='grid grid-cols-2'>
+        <div className='flex flex-col sm:grid sm:grid-cols-2 gap-6 sm:gap-0'>
           <section className='flex items-center justify-center'>
-            <Avatar className='h-32 w-32  rounded-full border'>
+            <Avatar className='h-20 w-20 sm:h-32 sm:w-32 rounded-full border'>
               <AvatarImage src={userProfile?.profilePicture} alt="profilePicture" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </section>
 
           <section>
-            <div className='flex flex-col gap-5'>
-              <div className='flex items-center gap-2'>
+            <div className='flex flex-col gap-4 sm:gap-5'>
+              <div className='flex flex-wrap items-center justify-center sm:justify-start gap-2'>
                 <span>{userProfile?.username}</span>
                 {
                   isLoggedInUserProfile ? (
@@ -60,10 +60,10 @@ function Profile() {
                 }
 
               </div>
-              <div className='flex items-center gap-4'>
-                <p ><span className='font-semibold'>posts</span>{userProfile?.posts.length}</p>
-                <p ><span className='font-semibold'>followers</span>{userProfile?.followers.length}</p>
-                <p ><span className='font-semibold'>following</span>{userProfile?.following.length}</p>
+              <div className='flex items-center justify-center sm:justify-start gap-4 flex-wrap'>
+                <p ><span className='font-semibold'>posts </span>{userProfile?.posts.length}</p>
+                <p ><span className='font-semibold'>followers </span>{userProfile?.followers.length}</p>
+                <p ><span className='font-semibold'>following </span>{userProfile?.following.length}</p>
 
 
               </div>
@@ -96,7 +96,7 @@ function Profile() {
             </span>
           </div>
 
-          <div className='grid grid-cols-3 gap-1'>
+          <div className='grid grid-cols-2 sm:grid-cols-3 gap-1'>
             {
               displayPost?.map((post) => {
 

@@ -88,12 +88,12 @@ function EditProfile() {
         }
     }
     return (
-        <div className='flex max-w-2xl mx-auto pl-10'>
-            <section className='flex flex-col gap-6 w-full my-8'>
+        <div className='flex max-w-2xl mx-auto px-4 sm:px-6 md:pl-10'>
+            <section className='flex flex-col gap-6 w-full my-4 md:my-8'>
                 <h1 className='font-bold text-xl'>Edit Profile</h1>
                 <div>
 
-                    <div className='flex items-center justify-between bg-gray-100 rounded p-6'>
+                    <div className='flex flex-col sm:flex-row items-center justify-between bg-gray-100 rounded p-4 sm:p-6 gap-4'>
                         <div className='flex items-center gap-3'>
                             <Avatar>
                                 <AvatarImage  src={user?.profilePicture} alt='post-image' />
@@ -101,11 +101,11 @@ function EditProfile() {
                             </Avatar>
                             <div>
                                 <h1 className='font-bold text-sm'>{user?.username}</h1>
-                                <span className='text-gray-600'>{user?.bio || 'Bio here'}</span>
+                                <span className='text-gray-600 text-sm'>{user?.bio || 'Bio here'}</span>
                             </div>
                         </div>
                         <input ref={imageRef} onChange={fileChangehandler} type="file" className='hidden' />
-                        <Button onClick={() => imageRef.current.click()} className='bg-[#0095f6] text-white h-8 hover:bg-[#206c9f] rounded-[6px]'>Change Photo</Button>
+                        <Button onClick={() => imageRef.current.click()} className='bg-[#0095f6] text-white h-8 hover:bg-[#206c9f] rounded-[6px] w-full sm:w-auto'>Change Photo</Button>
                     </div>
                     <div>
                         <h1 className='font-bold text-xl mb-2'>Bio</h1>

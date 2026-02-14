@@ -38,11 +38,11 @@ function ChatPage() {
     },[])
    
     return (
-        <div className='flex ml-[16%] h-screen'>
-            <section className='w-full md:w-1/4 my-8'>
+        <div className='flex flex-col md:flex-row h-screen'>
+            <section className='w-full md:w-1/3 lg:w-1/4 my-4 md:my-8 border-b md:border-b-0'>
                 <h1 className='font-bold text-xl mb-4 px-3'>{user?.username}</h1>
                 <hr className='mb-4 border-gray-300' />
-                <div className='overflow-y-auto h-[80vh]'>
+                <div className='overflow-y-auto h-[30vh] md:h-[80vh]'>
                     {
                         suggestedUsers.map((suggestedUser) => {
                             
@@ -70,7 +70,7 @@ function ChatPage() {
         
                 {
                     selectedUser ? (
-                        <section className='flex-1 border-l border-l-gray-300 flex flex-col h-full'>
+                        <section className='flex-1 border-l-0 md:border-l border-l-gray-300 flex flex-col h-[50vh] md:h-full'>
                             <div className='flex gap-3 items-center px-3 py-3 border-b border-gray-300 sticky top-0 bg-white z-10'>
                                 <Avatar>
                                     <AvatarImage src={selectedUser?.profilePicture} alt='profile' />
@@ -82,7 +82,7 @@ function ChatPage() {
                              </div>
                              <Messages selectedUser={selectedUser}/>
                                 <div className='flex items-center p-4 border-t border-t-gray-300'>
-                                    <input type="text" value={textMessage} onChange={(e)=>setTextMessage(e.target.value)}className='flex w-full mr-2 focus-visible:ring-transparent' placeholder='Messages...' />
+                                    <input type="text" value={textMessage} onChange={(e)=>setTextMessage(e.target.value)}className='flex w-full mr-2 focus-visible:ring-transparent border rounded px-2 py-1' placeholder='Messages...' />
                                     <Button onClick={()=>sendMessageHandler(selectedUser?._id)}>Send</Button>
                                 </div>
                             

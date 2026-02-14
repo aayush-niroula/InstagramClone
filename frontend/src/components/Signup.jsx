@@ -67,8 +67,8 @@ const Signup = () => {
   })
 
   return (
-    <div className='flex items-center w-screen h-screen justify-center'>
-      <form onSubmit={signUpHandler} className='shadow-lg flex flex-col gap-5 p-8 '>
+    <div className='flex items-center w-screen h-screen justify-center px-4'>
+      <form onSubmit={signUpHandler} className='shadow-lg flex flex-col gap-5 p-6 sm:p-8 w-full max-w-md'>
         <div className='my-4'>
           <h1 className='text-center font-bold text-xl'>LOGO</h1>
           <p className='text-sm text-center'>Signup to see photos and videos</p>

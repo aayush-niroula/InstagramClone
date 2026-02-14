@@ -33,7 +33,7 @@ credentials:true,
 
 }
 app.use(cors(corsOptions))
-//api 
+
 
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/post",postRoute);

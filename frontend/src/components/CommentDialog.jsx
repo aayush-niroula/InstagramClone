@@ -57,8 +57,8 @@ function CommentDialog({ open }) {
 
   return (
     <div className={`transition-all duration-300 ${open ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'} overflow-hidden`}>
-      <div className="bg-slate-100 border-t p-4 flex flex-col">
-        <div className='overflow-y-auto max-h-60 mb-4'>
+      <div className="bg-slate-100 border-t p-2 sm:p-4 flex flex-col">
+        <div className='overflow-y-auto max-h-40 sm:max-h-60 mb-4'>
           {comment.map((comment) => (
             <Comment key={comment._id} comment={comment} />
           ))}
@@ -69,9 +69,9 @@ function CommentDialog({ open }) {
             value={text}
             onChange={changeEventHandler}
             placeholder='Add a comment...'
-            className='w-full text-sm outline-none border-gray-300 p-2 rounded'
+            className='w-full text-sm outline-none border border-gray-300 p-2 rounded'
           />
-          <Button variant='outline' disabled={!text.trim()} onClick={sendMessageHandler}>
+          <Button variant='outline' disabled={!text.trim()} onClick={sendMessageHandler} className='text-xs sm:text-sm'>
             Send
           </Button>
         </div>
